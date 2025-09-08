@@ -1,0 +1,114 @@
+generator client {
+  provider = "prisma-client-js"
+  // output = "generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  ADMIN
+  SELLER
+  USER
+}
+
+enum PaymentMethod {
+  MERCADO_PAGO
+}
+
+enum PaymentStatus {
+  APPROVED
+  PENDING
+  REJECTED
+}
+
+enum Category {
+  CAMISAS
+  REMERAS
+  BUZOS
+  CAMPERAS
+  PANTALONES
+  SHORTS
+  ZAPATILLAS
+  BOTAS
+  SANDALIAS
+  ACCESORIOS
+  INTERIOR
+}
+
+model User {
+  id        String    @id @default(cuid())
+  deleted   Boolean   @default(false)
+  name      String
+  email     String    @unique
+  imageUrl  String    @default("")
+  password  String
+  role      UserRole  @default(USER)
+  cart      Cart?
+  sellerProducts   Product[]
+  directions Direction[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Product {
+  id          String    @id @default(cuid())
+  deleted     Boolean   @default(false)
+  name        String
+  description String
+  imageUrl    String
+  price       Float
+  category    Category
+  color       String
+  size        Float
+  stock       Int
+  seller      User      @relation(fields: [sellerId], references: [id])
+  sellerId    String
+  discounts   Discount[] @relation("ProductDiscounts")
+  cartItems   CartItem[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Cart {
+  id            String        @id @default(cuid())
+  deleted       Boolean       @default(false)
+  user          User          @relation(fields: [userId], references: [id])
+  userId        String        @unique
+  cartItems     CartItem[]
+  paymentMethod PaymentMethod @default(MERCADO_PAGO)
+  paymentStatus PaymentStatus @default(PENDING)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model CartItem {
+  id        String    @id @default(cuid())
+  cart      Cart      @relation(fields: [cartId], references: [id])
+  cartId    String
+  product   Product   @relation(fields: [productId], references: [id])
+  productId String
+  quantity  Int
+}
+
+model Discount {
+  id        String      @id @default(cuid())
+  products   Product[]  @relation("ProductDiscounts")
+  percentage Float
+  startDate  DateTime
+  endDate    DateTime
+}
+
+model Direction {
+  id        String    @id @default(cuid())
+  deleted   Boolean   @default(false)
+  user      User      @relation(fields: [userId], references: [id])
+  userId    String
+  address   String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+}

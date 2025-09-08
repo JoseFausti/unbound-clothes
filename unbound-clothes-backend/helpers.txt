@@ -1,0 +1,28 @@
+const createCartResult = await prisma.$transaction(async(prisma) => {
+            const existingCart = await prisma.cart.findUnique({ where: { userId } });
+            if (existingCart) throw new Error();
+           
+            const newCart = await prisma.cart.create({ data: { userId: userId }});
+            if (!newCart) throw new Error();
+
+            for (const item of cartItems) {
+                const product = await productModel.findUnique({ where: { id: item.productId } });
+                if (!product || product.deleted ) throw new Error();
+                if (product.stock < item.quantity) throw new Error();
+            }
+
+            const createdCartItems = await prisma.cartItem.createMany({ 
+                data: cartItems.map((item) => ({
+                        cartId: newCart.id,
+                        productId: item.productId,
+                        quantity: item.quantity
+                    }))
+                
+                }
+            );
+            if (createdCartItems.count !== cartItems.length) throw new Error();
+
+            return newCart;
+        })
+        if (!createCartResult) throw new Error();
+        return res.status(201).json(createCartResult);
