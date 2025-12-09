@@ -1,8 +1,10 @@
 import express from "express";
 import { authMiddleware } from "../../middleware/middleware";
-import { processWebhook, purchaseProducts } from "../../controller/api/cartController";
+import { createMercadopagoPreference, processPayment, processWebhook } from "../../controller/api/cartController";
 
-export const mercadoPagoRouter = express.Router();
+export const 
+mercadoPagoRouter = express.Router();
 
-mercadoPagoRouter.post("/:cartId", authMiddleware, purchaseProducts);
-mercadoPagoRouter.post("/webhook", authMiddleware, processWebhook);
+mercadoPagoRouter.post("/process_payment", processPayment);
+mercadoPagoRouter.post("/webhook", processWebhook);
+mercadoPagoRouter.post("/:cartId", authMiddleware, createMercadopagoPreference);

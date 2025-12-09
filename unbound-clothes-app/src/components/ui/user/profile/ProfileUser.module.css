@@ -1,0 +1,246 @@
+/* ============= GENERAL LAYOUT ============= */
+
+.container {
+  margin-top: 70px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+}
+
+.card {
+  display: flex;
+  width: 100%;
+  max-width: 1100px;
+  background: var(--bg-color);
+  border-radius: 16px;
+  padding: 20px;
+  gap: 24px;
+  box-shadow: 0 4px 18px var(--box-shadow);
+}
+
+/* ============= SIDEBAR ============= */
+
+.sidebar {
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-right: 10px;
+}
+
+.sidebarTitle {
+  font-size: 18px;
+  font-weight: 600;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--text-secondary);
+  color: var(--text-secondary);
+}
+
+.action {
+  width: 100%;
+  padding: 10px;
+  background: var(--accent-color);
+  color: #fff;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform .1s, background .2s;
+  box-shadow: 2px 2px 6px var(--box-shadow);
+}
+
+.action:hover {
+    color: #fff;
+  background: var(--accent-hover);
+  transform: scale(1.04);
+}
+
+.logout {
+  width: 100%;
+  padding: 10px;
+  background: var(--secondary-color);
+  color: #fff;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 2px 2px 6px var(--box-shadow);
+  transition: transform .1s, background .2s;
+}
+
+.logout:hover {
+  background: var(--secondary-color-hover);
+  transform: scale(1.04);
+}
+
+/* ============= CONTENT AREA ============= */
+
+.content {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+/* ============= RESPONSIVE ============= */
+
+@media screen and (max-width: 700px) {
+
+  .container {
+    padding: 0;
+  }
+
+  .card {
+    flex-direction: column;
+    padding: 10px 0;
+  }
+
+  .sidebar {
+    order: 2;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .content {
+    order: 1;
+    padding: 6px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+ 
+}
+
+
+/* WRAPPER */
+.mainWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 24px;
+}
+
+/* SECTION LIST */
+.sectionList {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 28px;
+}
+
+/* SECTIONS */
+.section {
+  background: var(--bg-color);
+  padding: 10px;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px var(--box-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sectionTitle {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text-secondary);
+}
+
+/* IMAGE AREA */
+.imageRow {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.imageBox {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profileImage {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+/* FIELDS */
+.fieldList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fieldRow {
+  display: flex;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.fieldLabel {
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.fieldValue {
+  font-size: 16px;
+}
+
+/* DIRECTIONS */
+.directionCard {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--divider);
+}
+
+.directionActions {
+  display: flex;
+  gap: 10px;
+}
+
+.emptyText {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* BUTTONS */
+.primaryButton {
+  padding: 10px 14px;
+  background: var(--accent-color);
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.primaryButton:hover {
+  background: var(--accent-hover);
+  transform: scale(1.03);
+}
+
+.deleteButton {
+  padding: 10px 14px;
+  background: var(--error-color);
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.deleteButton:hover {
+  background: var(--error-color-hover);
+  transform: scale(1.03);
+}

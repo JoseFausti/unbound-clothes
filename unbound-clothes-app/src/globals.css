@@ -1,0 +1,138 @@
+/* === LIGHT THEME === */
+:root {
+  /* Core brand colors */
+  --primary-color: #00C6FF; /* Electric cyan */
+  --primary-color-hover: #00A8E8;
+
+  --secondary-color: #FF5F1F; /* Neon orange */
+  --secondary-color-hover: #FF824D;
+
+  /* Backgrounds */
+  --bg-color: #F9F9FB; 
+  --bg-color-secondary: #EAEAEA;
+  --secondary-bg: #FFFFFF;
+  --hover-bg: #F1F1F3;
+
+  /* Text */
+  --title-color: #0E0E10;
+  --text-color: #1A1A1A;
+  --text-secondary: #4B4B4B;
+
+  /* UI accents */
+  --accent-color: #01cce7; /* Fluor cyan */
+  --accent-hover: #2bd8eb;
+  --accent-color-rgb: 0, 224, 255;
+
+  /* States */
+  --success-color: #00e70c; /* Neon green */
+  --error-color: #FF3366;   /* Hot pink/red */
+  --error-color-hover: #FF4D79;
+  --link: #00BFFF;
+  --link-hover: #0090CC;
+
+  /* Surfaces */
+  --header-bg: rgba(255, 255, 255, 0.9);
+  --footer-bg: rgba(255, 255, 255, 0.9);
+  --box-shadow: rgba(0, 187, 255, 0.35);
+
+  /* Accent elements like menu buttons */
+  --bg-color-menu: #00cee9;
+  --bg-color-menu-hover: #00b1cc;
+}
+
+/* === DARK THEME === */
+[data-theme="dark"] {
+  --primary-color: #fff834;
+  --primary-color-hover: #f2ff5d;
+
+  --bg-color: #0D0D0D;
+  --bg-color-secondary: #151515;
+  --secondary-bg: #1C1C1C;
+  --hover-bg: #262626;
+
+  --title-color: #FFFFFF;
+  --text-color: #E6E6E6;
+  --text-secondary: #BEBEBE;
+
+  --accent-color: #a034ff; /* Cyan neon */
+  --accent-hover: #ab5dff;
+  --accent-color-rgb: 160, 52, 255;
+
+  --success-color: #14ff57; /* Electric lime */
+  --error-color: #FF006E;   /* Neon pink-red */
+  --link: #00FFFF;
+  --link-hover: #4DFFFF;
+
+  --header-bg: rgba(0, 0, 0, 0.85);
+  --footer-bg: rgba(0, 0, 0, 0.85);
+  --box-shadow: rgba(183, 0, 255, 0.35);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  min-width: 320px; /* Minimum width for mobile devices */
+}
+
+html, body, main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+  
+main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 320px;
+}
+
+header, footer {
+  background-color: var(--header-bg);
+  padding: 20px 40px;
+}
+
+/* Opcional: separar ligeramente header y footer con sombra sutil */
+header {
+  box-shadow: 0 2px 4px var(--box-shadow);
+}
+
+footer {
+  box-shadow: 0 -2px 4px var(--box-shadow);
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+a:hover {
+  color: var(--primary-color-hover);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { /* width and height */
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track { /* track background color */
+  background: var(--bg-color-menu);
+}
+
+::-webkit-scrollbar-thumb { /* thumb (moveable) color and border radius */
+  background: var(--bg-color);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bg-color);
+}

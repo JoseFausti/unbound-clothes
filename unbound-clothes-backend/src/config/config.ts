@@ -39,3 +39,12 @@ const client = new MercadoPagoConfig({
 })
 export const mpPreference = new Preference(client);
 export const mpPayment = new Payment(client);
+
+// Google OAuth configuration
+export const googleClientId = process.env.GOOGLE_CLIENT_ID as string;
+
+// Email configuration
+export const userMail = {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASSWORD
+}

@@ -1,0 +1,244 @@
+/* ==== HERO ==== */
+.heroContent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: var(--text-color);
+  padding: 20px;
+  opacity: 1;
+  animation: fadeIn 1s ease forwards;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.heroTitle {
+  font-size: 64px;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-family: var(--font-family);
+  margin-bottom: 10px;
+}
+
+.heroSubtitle {
+  font-size: 22px;
+  margin-bottom: 40px;
+}
+
+.heroButton {
+  padding: 14px 42px;
+  background: var(--accent-color);
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 10px rgba(var(--accent-color), 0.4);
+}
+
+.heroButton:hover {
+  background: var(--accent-hover);
+  transform: scale(1.05);
+}
+
+.landingWrapper {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-bottom: 40px;
+}
+
+.landingVideo {
+  position: relative;
+  width: 100vw;
+  height: 600px;
+  object-fit: cover;
+}
+
+.landingContainer {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-color);
+    gap: 60px;
+    z-index: 1;
+}
+
+.landingSection {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 0 60px;
+}
+
+.landingSection_title {
+  font-weight: 700;
+  font-size: 34px;
+  font-family: var(--font-family);
+  color: var(--title-color);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-shadow: 2px 2px 0px var(--box-shadow);
+}
+
+.landingSection_title::after {
+  content: "";
+  display: block;
+  width: 100px;
+  height: 4px;
+  background: var(--accent-color);
+  margin-top: 10px;
+  border-radius: 2px;
+}
+
+.historyContent {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 1.8;
+  font-size: 18px;
+  color: var(--text-secondary);
+  font-family: var(--font-family);
+  background: var(--secondary-bg);
+  padding: 40px 50px;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px var(--box-shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.historyContent:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px var(--box-shadow);
+}
+
+.historyContent p {
+  margin-bottom: 18px;
+}
+
+.historyContent strong {
+  color: var(--accent-color);
+  font-weight: 700;
+}
+
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -60%); }
+  to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+/* ==== RESPONSIVE ==== */
+@media screen and (max-width: 768px) {
+  .heroTitle { font-size: 42px; }
+  .heroSubtitle { font-size: 18px; }
+  .landingSection_title { font-size: 26px; }
+  .landingSection { padding: 0 30px; }
+}
+
+/* === VIDEO HERO ESTILO ADIDAS === */
+
+.landingVideoWrapper {
+  position: relative;
+  width: 100%;
+  height: 88vh;
+  overflow: hidden;
+}
+
+.landingVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Overlay oscuro + fade a fondo */
+.videoOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.45),
+      rgba(0, 0, 0, 0.15) 40%,
+      var(--bg-color) 100%
+  );
+  backdrop-filter: blur(2px);
+  z-index: 2;
+}
+
+/* Texto estilo campaña */
+.videoText {
+  position: absolute;
+  bottom: 18%;
+  left: 6%;
+  z-index: 3;
+  color: #fff;
+}
+
+.videoHeadline {
+  font-size: 78px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  line-height: 1;
+}
+
+.videoSub {
+  margin-top: 18px;
+  margin-left: 4px;
+  font-size: 22px;
+  opacity: 0.9;
+}
+
+.videoCTA {
+  margin-top: 28px;
+  padding: 14px 40px;
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 40px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.videoCTA:hover {
+  transform: scale(1.05);
+  background: var(--accent-hover);
+}
+
+@media screen and (max-width: 1200px) {
+  .videoHeadline {
+    font-size: 64px;
+  }
+  .videoSub {
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .videoHeadline {
+    font-size: 52px;
+  }
+  .videoSub {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .videoHeadline {
+    font-size: 42px;
+  }
+  .videoSub {
+    font-size: 16px;
+  }
+}
+

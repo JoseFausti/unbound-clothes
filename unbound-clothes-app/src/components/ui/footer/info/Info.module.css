@@ -1,0 +1,46 @@
+.infoContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 40px;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.title {
+    color: var(--accent-color);
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  color: var(--accent-color);
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.text {
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+
+.text strong {
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+.list {
+  padding-left: 1.5rem;
+  line-height: 1.8;
+}
+

@@ -1,0 +1,276 @@
+.header {
+    position: absolute;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    max-height: fit-content;
+    min-height: 60px;
+    min-width: 320px;
+    width: 100%;
+    background-color: var(--bg-color);
+    z-index: 100; /* Header above content */
+}
+
+.logoContainer {
+    flex: 0; /* Logo does not grow */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4px;
+}
+
+.logo {
+    width: 68px;
+    height: 68px;
+    color: #1A1A1A;
+}
+
+.navContainer, .menuContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.navContainer {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 20px;
+}
+
+.menuContainer {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 20px;
+}
+
+.menuButton {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.navLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-decoration: none;
+    text-transform: capitalize;
+    transition: all 0.25s ease-in-out;
+}
+
+.navLink.firstIcon { 
+    order: -1;
+}
+
+.profileImage, .menuIcon { display: none; }
+
+.profileText {
+    padding-right: 10px;
+}
+
+.menuTextContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 8px;
+    color: var(--primary-color);
+    font-weight: 500;
+    font-size: 16px;
+    text-shadow: .5px .5px 0px var(--primary-color);
+    transition: all 0.2s ease-in-out;
+}
+
+.menuTextContainer:hover {
+    cursor: pointer;
+    color: var(--primary-color-hover);
+    transform: scale(1.05);
+}
+
+.dropDownIcon {
+    position: absolute;
+    cursor: pointer;
+    top: 12px;
+    left: 20px;
+    transition: all 0.2s ease-in-out;
+}
+
+.profileText {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    text-shadow: .5px .5px 0px var(--primary-color);
+    color: var(--primary-color);
+    transition: all 0.2s ease-in-out;
+}
+
+.profileText:hover {
+    color: var(--primary-color-hover);
+    transform: scale(1.05);
+    cursor: pointer;    
+}
+
+.cartIcon, .profileIcon, .menuIcon {
+    scale: 1.5;
+    color: var(--primary-color);
+}
+.cartIcon:hover, .profileIcon:hover, .menuIcon:hover {
+    color: var(--primary-color-hover);
+    transition: all 0.2s ease-in-out;
+    transform: scale(1.05);
+    cursor: pointer;    
+}
+
+.menuOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(8px);
+    z-index: 50; /* Behind header */
+}
+
+.dropdownMenu{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 220px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 2px;
+    background-color: var(--bg-color);
+    box-shadow: 2px 4px 4px var(--box-shadow);
+    overflow-y: auto;
+    z-index: 60;
+}
+
+.dropdownHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    gap: 20px;
+}
+
+.dropdownHeader button{
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    color: var(--primary-color);
+    font-size: 18px;
+    transition: all 0.2s ease-in-out;
+}
+
+.dropdownHeader button:hover {
+    transform: scale(1.15);
+    color: var(--error-color);
+}
+
+.dropdownTitle {
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 18px;
+    padding: 10px 20px;
+    color: var(--text-color);
+    text-shadow: #1A1A1A .4px .4px 0px;
+}
+
+.dropdownLink:first-of-type {
+    border-top: 2px solid var(--text-color);
+}
+
+.dropdownLink {
+    display: block;
+    padding: 10px 20px;
+    color: var(--text-color);
+    text-decoration: none;
+    text-shadow: #1A1A1A .5px .5px 0px;
+}
+
+.dropdownLink:hover {
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+}
+
+[data-theme="dark"] .dropdownLink:hover {
+    background-color: var(--primary-color-hover);
+}
+
+@media screen and (max-width: 920px) {
+    .hideOnTablet {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 620px) {
+  .hideOnMobile {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 500px) {
+    .menuTextContainer {
+        display: none;
+    }
+    .menuIcon {
+        display: block;
+    }
+    .navLink.firstIcon {
+        order: initial;
+    }
+    .profileText {
+        display: none;
+    }
+    .profileImage {
+        display: block;
+    }
+}
+    
+@media screen and (max-width: 380px) {
+    .navContainer{
+        padding-right: 10px;
+        gap: 12px;
+    }
+    .menuContainer {
+      padding-left: 10px;
+      gap: 12px;
+    }
+    .dropdownMenu {
+      width: 180px;
+    }
+}
+
+/* === SMART HEADER === */
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  z-index: 999;
+  transition: all 0.4s ease;
+  background: var(--header-bg); /* estado normal */
+}
+
+.show {
+  transform: translateY(0);
+}
+
+.transparent {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+

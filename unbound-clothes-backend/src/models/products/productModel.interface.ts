@@ -1,6 +1,7 @@
-import { Category } from "@prisma/client";
-import { ICartItem } from "../cart/cartItem/cartItemModel.interface";
+import { Category} from "@prisma/client";
 import { IDiscount } from "../discounts/discountModel.interface";
+import { IUser } from "../user/userModel.interface";
+import { IProductVariant } from "./variants/variantsModel.interface";
 
 export interface IProduct {
   id: string;
@@ -10,14 +11,12 @@ export interface IProduct {
   imageUrl: string;
   price: number;
   category: Category;
-  color: string;
-  size: number;
-  stock: number;
   sellerId: string;
   discounts: IDiscount[];
-  cartItems: ICartItem[];
+  likedBy: IUser[];
+  variants: IProductVariant[];
   createdAt: Date;
   updatedAt: Date;
 }
 
-export type ICreateUpdateProduct = Omit<IProduct, 'id' | 'deleted' | 'discounts' | 'cartItems' | 'createdAt' | 'updatedAt'>;
+export type ICreateUpdateProduct = Omit<IProduct, 'id' | 'deleted' | 'discounts' | 'likedBy' | 'variants' | 'createdAt' | 'updatedAt'>;

@@ -1,10 +1,11 @@
 export interface ICartItem {
   id: string;
   cartId: string;
-  productId: string;
+  variantId: string;
   quantity: number;
 }
 
+export type ICreateCartItem = Omit<ICartItem, 'id'>;
 export type IUpdateCartItem = Omit<ICartItem, 'id' | 'cartId'>;
 
 export interface IPreference {

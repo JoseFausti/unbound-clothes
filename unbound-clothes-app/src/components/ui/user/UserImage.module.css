@@ -1,0 +1,29 @@
+.userImageContainer {
+    display: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--accent-color);
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.userImageContainer:hover {
+  transform: scale(1.03);
+  cursor: pointer;
+}
+
+.profileImage {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  border-radius: 50%;
+}
+
+@media screen and (max-width: 500px) {
+  .userImageContainer{
+    display: flex;
+  }
+}

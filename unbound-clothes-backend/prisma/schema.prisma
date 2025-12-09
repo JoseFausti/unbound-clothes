@@ -25,18 +25,81 @@ enum PaymentStatus {
   REJECTED
 }
 
+enum Carrier {
+  CORREO_ARGENTINO
+}
+
+enum ShippingStatus {
+  PENDING
+  IN_TRANSIT
+  DELIVERED
+  RETURNED
+  CANCELLED
+}
+
 enum Category {
-  CAMISAS
-  REMERAS
-  BUZOS
-  CAMPERAS
-  PANTALONES
+  SHIRTS
+  TSHIRTS
+  SWEATSHIRTS
+  JACKETS
+  PANTS
   SHORTS
-  ZAPATILLAS
-  BOTAS
-  SANDALIAS
-  ACCESORIOS
-  INTERIOR
+  SNEAKERS
+  BOOTS
+  SANDALS
+  ACCESSORIES
+  UNDERWEAR
+}
+
+enum ClothingSize {
+  XS
+  S
+  M
+  L
+  XL
+  XXL
+  XXXL
+}
+
+enum ShoeSize {
+  EU_36
+  EU_37
+  EU_38
+  EU_39
+  EU_40
+  EU_41
+  EU_42
+  EU_43
+  EU_44
+  EU_45
+}
+
+enum Color {
+  BLACK
+  WHITE
+  GRAY
+  CHARCOAL
+  RED
+  BURGUNDY
+  BLUE
+  NAVY
+  TEAL
+  CYAN
+  MAGENTA
+  GREEN
+  OLIVE
+  LIME
+  YELLOW
+  ORANGE
+  PINK
+  PURPLE
+  VIOLET
+  BROWN
+  BEIGE
+  CREAM
+  SILVER
+  GOLD
+  BRONZE
 }
 
 model User {
@@ -49,7 +112,9 @@ model User {
   role      UserRole  @default(USER)
   cart      Cart?
   sellerProducts   Product[]
+  favorites Product[] @relation("UserFavorites")
   directions Direction[]
+  orders    Order[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
@@ -62,21 +127,33 @@ model Product {
   imageUrl    String
   price       Float
   category    Category
-  color       String
-  size        Float
-  stock       Int
-  seller      User      @relation(fields: [sellerId], references: [id])
+  seller      User      @relation(fields: [sellerId], references: [id], onDelete: Cascade)
   sellerId    String
-  discounts   Discount[] @relation("ProductDiscounts")
-  cartItems   CartItem[]
+  discounts   Discount[]
+  likedBy     User[]    @relation("UserFavorites")
+  variants    ProductVariant[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+}
+
+model ProductVariant {
+  id        String   @id @default(cuid())
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+  color     Color
+  size      String
+  weight    Float?
+  stock     Int
+  cartItem  CartItem?
+  orderItems OrderItem[]
+  
+  @@unique([productId, color, size]) // unique constraint productId + color + size
 }
 
 model Cart {
   id            String        @id @default(cuid())
   deleted       Boolean       @default(false)
-  user          User          @relation(fields: [userId], references: [id])
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        String        @unique
   cartItems     CartItem[]
   paymentMethod PaymentMethod @default(MERCADO_PAGO)
@@ -86,17 +163,20 @@ model Cart {
 }
 
 model CartItem {
-  id        String    @id @default(cuid())
-  cart      Cart      @relation(fields: [cartId], references: [id])
+  id        String          @id @default(cuid())
+  cart      Cart            @relation(fields: [cartId], references: [id], onDelete: Cascade)
   cartId    String
-  product   Product   @relation(fields: [productId], references: [id])
-  productId String
+  variant   ProductVariant? @relation(fields: [variantId], references: [id])
+  variantId String          @unique
   quantity  Int
+
+  @@unique([cartId, variantId]) // unique constraint cartId + variantId
 }
 
 model Discount {
   id        String      @id @default(cuid())
-  products   Product[]  @relation("ProductDiscounts")
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
   percentage Float
   startDate  DateTime
   endDate    DateTime
@@ -105,10 +185,53 @@ model Discount {
 model Direction {
   id        String    @id @default(cuid())
   deleted   Boolean   @default(false)
-  user      User      @relation(fields: [userId], references: [id])
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
   address   String
+  orders   Order[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 
+}
+
+model Order {
+  id            String         @id @default(cuid())
+  deleted       Boolean        @default(false)
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String
+  direction     Direction      @relation(fields: [directionId], references: [id], onDelete: Cascade)
+  directionId   String
+  items         OrderItem[]
+  paymentMethod PaymentMethod
+  paymentStatus PaymentStatus
+  totalAmount   Float
+  shippingDetail ShippingDetail?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model OrderItem {
+  id         String          @id @default(cuid())
+  order      Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId    String
+  variant    ProductVariant  @relation(fields: [variantId], references: [id])
+  variantId  String
+  quantity   Int
+  unitPrice  Float
+}
+
+model ShippingDetail {
+  id             String   @id @default(cuid())
+  order          Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId        String   @unique
+  carrier        Carrier  @default(CORREO_ARGENTINO)
+  trackingNumber String?  // courier tracking number
+  trackingUrl    String?  // courier tracking url
+  status         ShippingStatus @default(PENDING)
+  shippingCost   Float    @default(0)
+  addressSnapshot String  
+  estimatedDate  DateTime?
+  deliveredDate  DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }

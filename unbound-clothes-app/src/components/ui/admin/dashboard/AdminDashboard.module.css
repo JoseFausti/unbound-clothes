@@ -1,0 +1,79 @@
+.coreuiWrapper{
+    @import "~@coreui/coreui/dist/css/coreui.min.css";
+    margin-top: 70px;
+}
+
+.dashboardContainer {
+  padding: 2rem;
+  background-color: var(--bg-color);
+  min-height: 100vh;
+}
+
+.dashboardTitle {
+  margin-bottom: 1.4rem;
+  font-size: 2rem;
+  font-weight: 700;
+  text-decoration: underline;
+  color: var(--primary-color);
+}
+
+.dashboardRow {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 20px;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.chartRow {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin: 0 20px;
+}
+
+.dashboardCard {
+  padding: 10px;
+  border-radius: 12px;
+  border: 2px solid var(--accent-color);
+  box-shadow: 0 4px 8px var(--box-shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dashboardCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px var(--box-shadow);
+}
+
+.dashboardCardTitle {
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: var(--accent-color);
+}
+
+.dashboardCardText {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.totalSalesText {
+  color: var(--success-color);
+}
+
+.chartCard {
+    max-width: 800px;
+  padding: 8px;
+  border-radius: 12px;
+  border: 2px solid var(--accent-color);
+  box-shadow: 0 4px 8px var(--box-shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chartCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px var(--box-shadow);
+}
+

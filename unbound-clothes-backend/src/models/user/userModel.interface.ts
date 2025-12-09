@@ -2,6 +2,7 @@ import { UserRole } from "@prisma/client";
 import { ICart } from "../cart/cartModel.interface";
 import { IProduct } from "../products/productModel.interface";
 import { IDirection } from "../directions/directionsModel.interface";
+import { IOrder } from "../orders/orderModel.interface";
 
 export interface IUser {
     id:        string;
@@ -13,7 +14,9 @@ export interface IUser {
     role:   UserRole;
     cart?: ICart;
     sellerProducts: IProduct[];
+    favorites: IProduct[];
     directions: IDirection[];
+    orders: IOrder[];
     createdAt: Date;
     updatedAt: Date;
 }

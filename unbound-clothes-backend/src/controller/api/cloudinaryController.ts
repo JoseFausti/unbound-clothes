@@ -2,6 +2,20 @@ import {v2 as cloudinary} from "cloudinary";
 import { Request, Response } from "express";
 import { extractPublicId, hashFile } from "../../utils/functions";
 
+export const getCloudinaryController = async (req: Request, res: Response) => {
+  try {
+    const { imageUrl }: { imageUrl: string } = req.body;
+    if (!imageUrl) return res.status(400).json({ error: "Image URL is required" });
+    const publicId = extractPublicId(imageUrl);
+    const result = await cloudinary.api.resource(publicId);
+    if (!result) return res.status(404).json({ error: "Image not found" });
+    return res.status(200).json(result);
+  } catch (error: any) {
+    if (error.error.http_code === 404) return res.status(404).json({ error: "Image not found" });
+    return res.status(500).json({ error: "Internal server error" });
+  }
+}
+
 export const uploadCloudinaryController = async (req: Request, res: Response) => {
   try {
     // Verificamos si existe archivo
@@ -58,7 +72,7 @@ export const deleteCloudinaryController = async (req: Request, res: Response) =>
     if (!imageUrl) return res.status(400).json({ error: "Image URL is required" });
     const publicId = extractPublicId(imageUrl);
     const { result } = await cloudinary.uploader.destroy(publicId);
-    if (!result || result === "not found") return res.status(404).json({ error: "Image not found" });
+    if (!result || result === "not found") return res.status(200).json({ error: "Image not found, nothing to delete" });
     return res.status(200).json({ message: result });
   } catch (error) {
     return res.status(500).json({ error: "Internal server error" });

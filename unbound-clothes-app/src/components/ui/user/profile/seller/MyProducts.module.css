@@ -1,0 +1,65 @@
+.sellerProductsListContainer {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.emptyState {
+  padding: 20px 40px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  justify-content: baseline;
+  align-items: baseline;
+}
+
+.productsTitle {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--text-color);
+}
+
+.productsDescription {
+  font-size: 16px;
+  color: var(--text-color)
+}
+
+.createButtonContainer{  
+  width: 100%;
+  margin-top: 40px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.createButton {
+    max-width: 240px;
+    width: 100%;
+    max-height: 60px;
+    height: 80px;
+    background-color: var(--accent-color);
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+    text-shadow: .4px .4px .4px var(--bg-color);
+    border: none;
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin-left: 0;
+    font-size: 22px;
+    cursor: pointer;
+    flex: 1;
+    transition: all 0.25s ease-in-out;
+}
+
+.createButton:hover {
+    background-color: var(--accent-hover);
+    text-shadow: .4px .4px .4px #000;
+    box-shadow: 2px 2px 8px var(--box-shadow);
+    transform: scale(1.05);
+}

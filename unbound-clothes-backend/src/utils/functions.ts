@@ -2,7 +2,9 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import {jwtConfig} from "../config/config";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
-import { UserRole } from "@prisma/client";
+import { Category, UserRole } from "@prisma/client";
+import { IProduct } from "../models/products/productModel.interface";
+import { ClothingSize, ShoeSize } from "@prisma/client";
 
 export const connectIds = <T extends { id: string }>(items?: T[]) => {
   return Array.isArray(items) && items.length
@@ -16,34 +18,25 @@ export const disconnectIds = <T extends { id: string }>(items?: T[]) => {
     : undefined;
 }
 
+export const setIds = <T extends { id: string }>(items?: T[]) => {
+  return Array.isArray(items) && items.length
+    ? { set: items.map((item) => ({ id: item.id })) }
+    : { set: [] };
+};
+
 export const includeByUserRole = (role: UserRole) => {
-  if (role === UserRole.USER) return { cart: true, directions: true };
+  if (role === UserRole.USER) return { cart: true, favorites: { include: { discounts: true }}, directions: true, orders: { include: { items: true, shippingDetail: true } }};
   if (role === UserRole.SELLER) return { sellerProducts: true };
   return {};
 }
 
-export const isAdmin = (token: string): boolean => {
-  try {
-    const decoded = jwt.verify(token, jwtConfig.jwtSecret!) as JwtPayload;
-    return decoded.role === UserRole.ADMIN || decoded.role === UserRole.SUPER_ADMIN;
-
-  } catch (error) {
-    return false;
-  }
-}
-
-export const isSuperAdmin = (token: string): boolean => {
-  try {
-    const decoded = jwt.verify(token, jwtConfig.jwtSecret!) as JwtPayload;
-    return decoded.role === UserRole.SUPER_ADMIN;
-
-  } catch (error) {
-    return false;
-  }
-}
-
 export const generateToken = (payload: JwtPayload, expiresIn: jwt.SignOptions['expiresIn'] = '1d'): string => {
   return jwt.sign(payload , jwtConfig.jwtSecret!, { expiresIn });
+};
+
+export const decodeToken = (token: string) => {
+  const decodedToken = jwt.verify(token, jwtConfig.jwtSecret!);
+  return decodedToken as JwtPayload;
 };
 
 export const isValidToken = (token: string) => {
@@ -65,7 +58,8 @@ export const comparePassword = async (password: string, hashedPassword: string):
 
 export const hashFile = (file: Buffer): string => {
   const hash = crypto.createHash("sha256").update(file).digest("hex");
-  return hash;
+  const unique = `${hash}-${Date.now()}`;
+  return unique;
 }
 
 export const extractPublicId = (imageUrl: string): string => {
@@ -75,6 +69,47 @@ export const extractPublicId = (imageUrl: string): string => {
 };
 
 export const validateAddress = (address: string): boolean => {
-  const addressRegex = /^[A-Z][a-zA-Z\s]+ \d+, [A-Z][a-zA-Z\s]+, [A-Z][a-zA-Z\s]+$/;
-  return addressRegex.test(address);
+
+  // - Street: may include letters, numbers, dots, accents, ñ, and spaces. - Number: must be digits only.
+  // - Number: must be digits only.
+  // - City & Province: may include only letters, accents, ñ, dots, and spaces (no numbers).
+
+  const addressRegex = /^[\w\sÁÉÍÓÚáéíóúÑñ.]+ \d+, [A-Za-zÁÉÍÓÚáéíóúÑñ\s.]+, [A-Za-zÁÉÍÓÚáéíóúÑñ\s.]+$/;
+  return addressRegex.test(address.trim());
 };
+
+export const calculateDiscountedPrice = (product: IProduct): number => {
+  const totalDiscount = product.discounts?.reduce((sum, d) => sum + d.percentage, 0) ?? 0;
+  const clampedDiscount = Math.min(100, totalDiscount);
+  return product.price * (1 - clampedDiscount / 100);
+};
+
+
+export const validateSize = (category: Category, size: string) => {
+
+  const clothingCategories: Category[] = ["SHIRTS", "TSHIRTS", "SWEATSHIRTS", "JACKETS", "PANTS", "SHORTS", "UNDERWEAR"];
+  const shoeCategories: Category[] = ["SNEAKERS", "BOOTS", "SANDALS"];
+
+  if (clothingCategories.includes(category)) {
+    if (!Object.values(ClothingSize).includes(size as ClothingSize)) {
+      throw new Error("Invalid clothing size");
+    }
+    return;
+  }
+
+  if (shoeCategories.includes(category)) {
+    if (!Object.values(ShoeSize).includes(size as ShoeSize)) {
+      throw new Error("Invalid shoe size");
+    }
+    return;
+  }
+
+  if (category === "ACCESSORIES"){
+    if (size !== null && size.trim() !== "" && size !== "ONE_SIZE") {
+      throw new Error("Accessories should not have size or must be ONE_SIZE");
+    }
+    return;
+  }
+
+  throw new Error("Unknown category for size validation");
+}

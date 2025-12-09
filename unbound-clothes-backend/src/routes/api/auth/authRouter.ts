@@ -1,8 +1,11 @@
 import express from "express";
-import { login, register } from "../../../controller/api/auth/authController";
+import { login, register, googleLogin } from "../../../controller/api/auth/authController";
 
 export const authRouter = express.Router();
 
 // CRUD Authentication
 authRouter.post("/login", login);
 authRouter.post("/register", register);
+
+// Google OAuth Authentication
+authRouter.post("/login/google", googleLogin);

@@ -1,0 +1,68 @@
+.favoriteProductsWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  gap: 20px;
+  box-sizing: border-box;
+}
+
+.favoriteProductsContainer {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.addToCartButton {
+  width: 100%;
+  max-width: 250px;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  text-shadow: .2px .2px .5px #fff;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--accent-color);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.15s ease;
+}
+
+.addToCartButton:hover {
+  background: var(--accent-hover);
+  transform: scale(1.05);
+}
+
+.emptyState {
+  padding: 20px 40px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  justify-content: baseline;
+  align-items: baseline;
+}
+
+.favoriteProductsTitle {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--text-color);
+}
+
+.favoriteProductsDescription {
+  font-size: 16px;
+  color: var(--text-color)
+}

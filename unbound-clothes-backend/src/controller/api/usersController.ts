@@ -1,11 +1,10 @@
 import { Request, Response } from "express";
-import { connectIds, hashPassword, includeByUserRole } from "../../utils/functions";
+import { hashPassword, includeByUserRole, setIds } from "../../utils/functions";
 import { ErrorResponse } from "../../types/types";
 import { userModel } from "../../models/user/userModel";
 import { IUser } from "../../models/user/userModel.interface";
 import { UserRole } from "@prisma/client";
-import { directionModel } from "../../models/directions/directionsModel";
-import { IDirection } from "../../models/directions/directionsModel.interface";
+import { IProduct } from "../../models/products/productModel.interface";
 
 export const getAllUsers = async (req: Request, res: Response): Promise<Response<IUser[] | ErrorResponse>> => {
     try {
@@ -14,6 +13,8 @@ export const getAllUsers = async (req: Request, res: Response): Promise<Response
             include: {
                 cart: true,
                 directions: true,
+                favorites: true,
+                orders: { include: { items: true, shippingDetail: true } },
                 sellerProducts: true
             }
         });
@@ -32,10 +33,12 @@ export const getUserById = async (req: Request, res: Response): Promise<Response
             include: {
                 cart: true,
                 directions: true,
+                favorites: true,
+                orders: { include: { items: true, shippingDetail: true }, orderBy: { createdAt: "desc" } },
                 sellerProducts: true
             }
         });
-        if (user && !user.deleted && user.role !== UserRole.SUPER_ADMIN) return res.status(200).json(user);
+        if (user && !user.deleted) return res.status(200).json(user);
         return res.status(404).json({ error: "User not found" });
     } catch (error) {
         return res.status(500).json({ error: "Failed to fetch user" });
@@ -54,6 +57,8 @@ export const deleteUser = async (req: Request, res: Response): Promise<Response<
             include: {
                 cart: true,
                 directions: true,
+                favorites: true,
+                orders: { include: { items: true, shippingDetail: true } },
                 sellerProducts: true
             }
         });
@@ -75,6 +80,8 @@ export const restoreUser = async (req: Request, res: Response): Promise<Response
             include: {
                 cart: true,
                 directions: true,
+                favorites: true,
+                orders: { include: { items: true, shippingDetail: true } },
                 sellerProducts: true
             }
         });
@@ -82,6 +89,20 @@ export const restoreUser = async (req: Request, res: Response): Promise<Response
         return res.status(200).json(restoredUser);
     } catch (error) {
         return res.status(500).json({ error: "Failed to restore user" });
+    }
+}
+
+export const changeUserImage = async (req: Request, res: Response): Promise<Response<IUser | ErrorResponse>> => {
+    try {
+        const userId = req.params.id;
+        const imageUrl: string = req.body.imageUrl;
+        const user = await userModel.findUnique({ where: { id: userId } });
+        if (!user || user.deleted) return res.status(404).json({ error: "User not found" });
+        const updatedUser = await userModel.update({ where: { id: userId }, data: { imageUrl }});
+        if (!updatedUser) throw new Error();
+        return res.status(200).json(updatedUser);
+    } catch (error) {
+        return res.status(500).json({ error: "Failed to update user image" });
     }
 }
 
@@ -111,20 +132,44 @@ export const createCustomer = async (req: Request, res: Response): Promise<Respo
 export const updateCustomer = async (req: Request, res: Response): Promise<Response<IUser | ErrorResponse>> => {
     try {
         const userId = req.params.id;
-        const { name, email, imageUrl, password } = req.body;
+        const { name, email, imageUrl, password, favorites } = req.body;
         if (!name || !email || !password) return res.status(400).json({ error: "Name, email, and password are required" });
         const hashedPassword = await hashPassword(password);
         const user = await userModel.findUnique({ where: { id: userId } });
         if (!user || user.deleted || user.role !== UserRole.USER) return res.status(404).json({ error: "User not found" });
         const updatedCustomer = await userModel.update({
             where: { id: userId },
-            data: { name, email, imageUrl, password: hashedPassword },
-            include: includeByUserRole(UserRole.USER)
+            data: { 
+                name, 
+                email, 
+                imageUrl, 
+                password: hashedPassword,
+                favorites: setIds(favorites),
+            },
+            include: includeByUserRole(UserRole.USER),
         });
-        if (!updatedCustomer) throw new Error();
+        if (!updatedCustomer) throw new Error();    
         return res.status(200).json(updatedCustomer);
     } catch (error) {
         return res.status(500).json({ error: "Failed to update customer" });
+    }
+}
+
+export const updateFavorites = async (req: Request, res: Response): Promise<Response<IUser | ErrorResponse>> => {
+    try {
+        const userId = req.params.id;
+        const { favorites } = req.body as { favorites: IProduct[] };
+        const user = await userModel.findUnique({ where: { id: userId } });
+        if (!user || user.deleted || user.role !== UserRole.USER) return res.status(404).json({ error: "User not found" });
+        const updatedCustomer = await userModel.update({
+            where: { id: userId },
+            data: { favorites: setIds(favorites) },
+            include: includeByUserRole(UserRole.USER)
+        });
+        if (!updatedCustomer) throw new Error();    
+        return res.status(200).json(updatedCustomer);
+    } catch (error) {
+        return res.status(500).json({ error: "Failed to update favorites" });
     }
 }
 
@@ -246,13 +291,15 @@ export const restoreAdmin = async (req: Request, res: Response): Promise<Respons
 
 export const changeUserRole = async (req: Request, res: Response): Promise<Response<IUser | ErrorResponse>> => {
     try {
-        const userId = req.params.id;
+        const { userId } = req.params;
         const { role } = req.body;
         const user = await userModel.findUnique({ 
             where: { id: userId }, 
             include: {
                 cart: true,
                 directions: true,
+                favorites: true,
+                orders: true,
                 sellerProducts: true
             }
         });
@@ -263,12 +310,15 @@ export const changeUserRole = async (req: Request, res: Response): Promise<Respo
                 role,
                 cart: user.cart ? { delete: true}: undefined,
                 directions: { deleteMany: {} },
+                favorites: { set: [] },
+                orders: { deleteMany: {} },
                 sellerProducts: { deleteMany: {} }
             }
         });
         if (!updatedUser) throw new Error();
         return res.status(200).json(updatedUser);
     } catch (error) {
+        console.log(error);
         return res.status(500).json({ error: "Failed to change user role" });
     }
 }

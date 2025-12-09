@@ -1,0 +1,141 @@
+.footer {
+  background: var(--footer-bg);
+  color: var(--text-color);
+  padding: 60px 80px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+/* === Layout === */
+.footerContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 60px;
+  margin-bottom: 40px;
+}
+
+/* === Brand === */
+.footerBrand {
+  flex: 1 1 120px;
+  max-width: 400px;
+}
+
+.brandName {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--accent-color);
+  margin-bottom: 12px;
+}
+
+.brandDescription {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* === Links === */
+.footerLinks {
+  flex: 0.2 1 120px;
+}
+
+.linksTitle {
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+  color: var(--title-color);
+}
+
+.footerLinks ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footerLinks li {
+  margin-bottom: 10px;
+}
+
+.footerLinks a {
+  color: var(--text-secondary);
+  font-size: 15px;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.footerLinks a:hover {
+  color: var(--accent-color);
+  transform: translateX(4px);
+}
+
+/* === Social === */
+.footerSocial {
+  flex: 1 1 120px;
+}
+
+.socialIcons {
+  display: flex;
+  gap: 16px;
+}
+
+.socialIcons a {
+  font-size: 20px;
+  color: var(--text-secondary);
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.socialIcons a:hover {
+  color: var(--accent-color);
+  transform: scale(1.2);
+}
+
+/* === Bottom bar === */
+.footerBottom {
+  text-align: center;
+  border-top: 1px solid var(--box-shadow);
+  padding-top: 20px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* === Decorative glow (subtle gradient glow for premium look) === */
+.footer::before {
+  content: "";
+  position: absolute;
+  top: -150px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(
+    circle,
+    rgba(var(--accent-color-rgb), 0.12) 0%,
+    transparent 70%
+  );
+  filter: blur(100px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* === Responsive === */
+@media screen and (max-width: 900px) {
+  .footer {
+    padding: 40px 40px 20px;
+  }
+  .footerContainer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 40px;
+  }
+  .brandDescription {
+    max-width: 90%;
+    margin: 0 auto;
+  }
+  .socialIcons {
+    justify-content: center;
+  }
+}

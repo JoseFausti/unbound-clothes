@@ -1,0 +1,50 @@
+.sellerProductsListContainer {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  width: 100%;
+  overflow-y: auto;
+  scrollbar-color: var(--accent-color) transparent;
+  scrollbar-width: thin;
+}
+
+.createButtonContainer{  
+  width: 100%;
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.createButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 160px;
+    max-width: 200px;
+    height: 40px;
+    padding: 8px 0;
+    background-color: var(--accent-color);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 4px 4px 8px var(--box-shadow);
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.createButton:hover{
+  background: var(--accent-hover);
+  transform: scale(1.05);
+}
+
+@media screen and (max-width: 400px) {
+  .sellerProductsListContainer{
+    padding: 4px;
+  }
+}

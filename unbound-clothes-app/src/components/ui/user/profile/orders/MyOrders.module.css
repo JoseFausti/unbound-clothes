@@ -1,0 +1,74 @@
+.orderProductsWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  gap: 20px;
+  box-sizing: border-box;
+}
+
+.orderProductsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+.deleteHistory {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    padding: 0 10px;
+}
+
+.deleteHistoryButton{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 120px;
+  width: 100%;
+  max-width: 160px;
+  height: 40px;
+  padding: 8px 0;
+  background-color: var(--accent-color);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 4px 4px 8px var(--box-shadow);
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.deleteHistoryButton:hover{
+  background: var(--accent-hover);
+  transform: scale(1.05);
+}
+
+.emptyState {
+  padding: 20px 40px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  justify-content: baseline;
+  align-items: baseline;
+}
+
+.favoriteProductsTitle {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--text-color);
+}
+
+.favoriteProductsDescription {
+  font-size: 16px;
+  color: var(--text-color)
+}

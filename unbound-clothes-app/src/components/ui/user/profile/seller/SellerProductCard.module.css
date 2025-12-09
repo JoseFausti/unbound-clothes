@@ -1,0 +1,190 @@
+.cardWrapper{
+    width: 100%;
+    max-width: 600px; 
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-color);
+    border-radius: 12px;
+    border: 1px solid var(--accent-color);
+    overflow: visible;
+    padding: 12px 16px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border 0.25s ease;
+}
+
+.cardWrapper:hover {
+  transform: scale(1.01) translateY(-2px);
+  border: 1px solid var(--accent-hover);
+  box-shadow: 2px 2px 20px var(--accent-color)
+}
+
+.cardWrapper:last-child {
+  margin-bottom: 20px;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 300px;
+  max-width: 680px;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.imageContainer {
+  flex-shrink: 0;
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .image {
+  transform: scale(1.05);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: capitalize;
+  color: var(--accent-color);
+}
+
+.priceContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+}
+
+.price {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--success-color);
+}
+
+.oldPrice {
+  font-size: 0.8rem;
+  color: #888;
+  text-decoration: line-through;
+}
+
+.description {
+  font-size: 14px;
+  color: var(--text-color);
+  line-height: 1.4;
+  max-height: 40px;
+  text-overflow: ellipsis;
+}
+
+.soldContainer {
+  display: flex;
+  align-items: flex-end;
+  font-size: 14px;
+  gap: 20px; 
+}
+
+.soldProducts {
+  color: var(--text-secondary);
+}
+
+.seeMore {
+  color: var(--accent-color);
+  transition: color 0.2s ease, transform 0.1s ease;
+}
+
+.seeMore:hover {
+  color: var(--accent-hover);
+  cursor: pointer;
+  transform: scale(1.01);
+}
+
+.actions {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(80px, 1fr));
+  grid-template-rows: auto auto;
+  justify-items: center;
+  padding: 12px 0;
+  gap: 10px;
+}
+
+.actions button:last-child {
+  grid-column: 3 / 4;
+  justify-self: center;
+}
+
+.actionButton{
+    width: 100%;
+    min-width: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    padding: 8px;
+    background-color: var(--accent-color);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 4px 4px 8px var(--box-shadow);
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.actionButton:hover{
+  background: var(--accent-hover);
+  transform: scale(1.05);
+}
+
+.actionButtonDelete{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  padding: 8px 0;
+  color: #fff;
+  background-color: var(--error-color);
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 4px 4px 8px var(--box-shadow);
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.actionButtonDelete:hover{
+  background: var(--error-color-hover);
+  transform: scale(1.05);
+}
+
+@media screen and (max-width: 400px) {
+  .cardWrapper{
+    max-width: 300px;
+  }  
+  .card{
+    min-width: 260px;
+  }
+}

@@ -1,0 +1,31 @@
+.searchBarContainer{
+    display: flex;
+    flex-shrink: .8;
+    align-items: center;
+    gap: 10px;
+}
+
+.searchIcon {
+    color: var(--primary-color);
+    scale: 1.5;
+}
+
+.searchIcon:hover {
+    color: var(--primary-color-hover);
+    transition: all 0.2s ease-in-out;
+    transform: scale(1.05);
+    cursor: pointer;    
+}
+
+.searchInput {
+    all: unset;
+    border: 1px solid var(--text-secondary);
+    border-radius: 4px;
+    padding: 4px 8px;
+    width: 100%;
+    max-width: 250px;
+    font-size: 16px;
+    color: var(--accent-color);
+    text-shadow: .5px .5px 0px var(--box-shadow);
+    background-color: transparent;
+}

@@ -1,9 +1,9 @@
-import { IProduct } from "../products/productModel.interface";
-
 export interface IDiscount {
   id: string;
-  products: IProduct[];
+  productId: string;
   percentage: number;
   startDate: Date;
   endDate: Date;
 }
+
+export type ICreateUpdateDiscount = Omit<IDiscount, 'id' | 'productId'>;
